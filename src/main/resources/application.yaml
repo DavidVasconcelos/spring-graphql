@@ -5,3 +5,8 @@ logging:
 spring:
   main:
     banner-mode: OFF
+
+dgs:
+  graphql:
+    graphiql:
+      enabled: false

@@ -21,9 +21,11 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation 'com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.7'
+	implementation(platform('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:8.5.7'))
 	implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:8.5.7'
 	implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-scalars:8.5.7'
+
+	implementation 'net.datafaker:datafaker:2.2.2'
 }
 
 tasks.named('test') {
