@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @DgsComponent
-public class FakeHelloResolver {
+public class FakeHelloDataResolver {
 
     @DgsQuery
     public List<Hello> allHellos() {
