@@ -9,5 +9,6 @@ type Query {
     booksByReleased(releasedInput: ReleaseHistoryInput!): [Book]
     mobileApps(mobileAppFilter: MobileAppFilter): [MobileApp]
     oneApp(appId: String) : MobileApp
+    pets(petFilter: PetFilter) : [Pet]
 }
 

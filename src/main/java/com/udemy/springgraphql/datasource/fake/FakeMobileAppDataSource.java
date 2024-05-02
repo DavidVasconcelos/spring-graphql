@@ -6,7 +6,6 @@ import com.udemy.springgraphql.generated.types.MobileApp;
 import com.udemy.springgraphql.generated.types.MobileAppCategory;
 import jakarta.annotation.PostConstruct;
 import net.datafaker.Faker;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.MalformedURLException;
@@ -20,10 +19,13 @@ import java.util.concurrent.ThreadLocalRandom;
 @Configuration
 public class FakeMobileAppDataSource {
 
-    public static final List<MobileApp> MOBILE_APP_LIST = new ArrayList<>();
+    private final Faker faker;
 
-    @Autowired
-    private Faker faker;
+    public FakeMobileAppDataSource(final Faker faker) {
+        this.faker = faker;
+    }
+
+    public static final List<MobileApp> MOBILE_APP_LIST = new ArrayList<>();
 
     @PostConstruct
     private void postConstruct() throws MalformedURLException {
