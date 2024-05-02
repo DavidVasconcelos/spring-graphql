@@ -13,6 +13,7 @@ type Query {
     oneApp(appId: String) : MobileApp
     pets(petFilter: PetFilter) : [Pet]
     smartSearch(keyword: String) : [SmartSearchResult]
+    additionalOnRequest: String
 }
 
 type Mutation {
