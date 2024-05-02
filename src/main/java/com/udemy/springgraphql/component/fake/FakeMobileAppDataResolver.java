@@ -28,6 +28,15 @@ public class FakeMobileAppDataResolver {
 
     }
 
+    @DgsQuery(field = "oneApp")
+    public MobileApp getOneApp(@InputArgument(name = "appId") final String appId) {
+        return FakeMobileAppDataSource.MOBILE_APP_LIST
+                .stream()
+                .filter(mobileApp -> mobileApp.getAppId().equals(appId))
+                .findFirst().orElse(null);
+
+    }
+
     private boolean matchFilter(final MobileAppFilter mobileAppFilter, final MobileApp mobileApp) {
         final boolean isAppMatch = StringUtils.containsIgnoreCase(mobileApp.getName(),
                 StringUtils.defaultIfBlank(mobileAppFilter.getName(), StringUtils.EMPTY))

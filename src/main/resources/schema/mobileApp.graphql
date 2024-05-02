@@ -1,4 +1,5 @@
 type MobileApp {
+    appId: ID! # always String
     name: String!
     version: String
     platform: [String]
