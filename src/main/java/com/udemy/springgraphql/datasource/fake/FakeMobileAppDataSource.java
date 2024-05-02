@@ -3,6 +3,7 @@ package com.udemy.springgraphql.datasource.fake;
 import com.udemy.springgraphql.generated.types.Address;
 import com.udemy.springgraphql.generated.types.Author;
 import com.udemy.springgraphql.generated.types.MobileApp;
+import com.udemy.springgraphql.generated.types.MobileAppCategory;
 import jakarta.annotation.PostConstruct;
 import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,9 @@ public class FakeMobileAppDataSource {
                     .releaseDate(LocalDate.now().minusDays(faker.random().nextInt(365)))
                     .downloaded(faker.number().numberBetween(1, 1_500_000))
                     .homepage(new URL(faker.internet().url()))
-//                    .category(MobileAppCategory.values()[
-//                            faker.random().nextInt(MobileAppCategory.values().length)]
-//                    )
+                    .category(MobileAppCategory.values()[
+                            faker.random().nextInt(MobileAppCategory.values().length)]
+                    )
                     .build();
 
             for (int j = 0; j < ThreadLocalRandom.current().nextInt(1, 3); j++) {

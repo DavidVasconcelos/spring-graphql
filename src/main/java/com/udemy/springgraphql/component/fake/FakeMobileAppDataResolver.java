@@ -56,9 +56,14 @@ public class FakeMobileAppDataResolver {
             return false;
         }
 
-        return mobileAppFilter.getAuthor() == null
-                || StringUtils.containsIgnoreCase(mobileApp.getAuthor().getName(),
-                StringUtils.defaultIfBlank(mobileAppFilter.getAuthor().getName(), StringUtils.EMPTY));
+        if (mobileAppFilter.getAuthor() != null
+                && !StringUtils.containsIgnoreCase(mobileApp.getAuthor().getName(),
+                StringUtils.defaultIfBlank(mobileAppFilter.getAuthor().getName(), StringUtils.EMPTY))) {
+            return false;
+        }
+
+        return mobileAppFilter.getCategory() == null
+                || mobileApp.getCategory().equals(mobileAppFilter.getCategory());
     }
 
 }
