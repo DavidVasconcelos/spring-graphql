@@ -1,7 +1,6 @@
-package com.udemy.springgraphql.component.fake;
+package com.udemy.springgraphql.component.fake.resolver;
 
 import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import com.udemy.springgraphql.datasource.fake.FakeBookDataSource;
