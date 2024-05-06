@@ -36,6 +36,9 @@ dependencies {
     runtimeOnly 'org.flywaydb:flyway-database-postgresql:10.12.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.32'
+
+    implementation 'org.ocpsoft.prettytime:prettytime:5.0.7.Final'
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
 }
 
 tasks.named('test') {
