@@ -5,8 +5,33 @@ logging:
 spring:
   main:
     banner-mode: OFF
-
-dgs:
-  graphql:
-    graphiql:
-      enabled: false
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://fedora:5432/postgres?useTimezone=true&serverTimezone=America/SaoPaulo&createDatabaseIfNotExist=true&cachePrepStmts=true&useServerPrepStmts=true&rewriteBatchedStatements=true
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 2
+      maximum-pool-size: 30
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: false
+        format_sql: true
+        type: trace
+        id:
+          new_generator_mappings: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+          batch_size: 1000
+          default_schema: problemz
+  flyway:
+    enabled: true
+    validate-on-migrate: false
