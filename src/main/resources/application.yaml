@@ -18,7 +18,7 @@ spring:
     hibernate:
       ddl-auto: none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     properties:
       hibernate:
         show_sql: true
@@ -31,7 +31,8 @@ spring:
           lob:
             non_contextual_creation: true
           batch_size: 1000
-          default_schema: problemz
+        default_schema: problemz
   flyway:
     enabled: true
     validate-on-migrate: false
+    default-schema: problemz

@@ -17,6 +17,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Comparator;
 import java.util.List;
 
 @Configuration
@@ -42,6 +43,7 @@ public class GraphqlBeanMapper {
         final List<String> tagList = List.of(original.getTags().split(","));
         final List<Solution> solutions = original.getSolutions()
                 .stream()
+//                .sorted(Comparator.comparing(Solutionz::getCreationTimestamp).reversed())
                 .map(this::mapToGraphql)
                 .toList();
         return Problem.newBuilder()

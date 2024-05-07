@@ -2,11 +2,8 @@
 
 -- table definitions
 CREATE SCHEMA IF NOT EXISTS problemz;
-GRANT
-ALL
-ON SCHEMA problemz TO postgres;
-SET
-search_path TO problemz;
+GRANT ALL ON SCHEMA problemz TO postgres;
+SET search_path TO problemz;
 DROP TABLE IF EXISTS userz_token;
 DROP TABLE IF EXISTS solutionz;
 DROP TABLE IF EXISTS problemz;
