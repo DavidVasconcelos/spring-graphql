@@ -19,38 +19,39 @@ import java.util.UUID;
 @DgsComponent
 public class ProblemDataResolver {
 
-    private final ProblemzQueryService service;
-    private final GraphqlBeanMapper graphqlBeanMapper;
+  private final ProblemzQueryService service;
+  private final GraphqlBeanMapper graphqlBeanMapper;
 
-    public ProblemDataResolver(final ProblemzQueryService service, final GraphqlBeanMapper graphqlBeanMapper) {
-        this.service = service;
-        this.graphqlBeanMapper = graphqlBeanMapper;
-    }
+  public ProblemDataResolver(final ProblemzQueryService service,
+      final GraphqlBeanMapper graphqlBeanMapper) {
+    this.service = service;
+    this.graphqlBeanMapper = graphqlBeanMapper;
+  }
 
-    @DgsQuery(field = "problemLatestList")
-    public List<Problem> getProblemLatestList() {
-        return service.problemzLatestList()
-                .stream()
-                .map(graphqlBeanMapper::mapToGraphql)
-                .toList();
-    }
+  @DgsQuery(field = "problemLatestList")
+  public List<Problem> getProblemLatestList() {
+    return service.problemzLatestList()
+        .stream()
+        .map(graphqlBeanMapper::mapToGraphql)
+        .toList();
+  }
 
-    @DgsQuery(field = "problemDetail")
-    public Problem getProblemDetail(@InputArgument(name = "id") final String problemId) {
-        return service.problemzDetail(UUID.fromString(problemId))
-                .map(graphqlBeanMapper::mapToGraphql)
-                .orElse(Problem.newBuilder().build());
-    }
+  @DgsQuery(field = "problemDetail")
+  public Problem getProblemDetail(@InputArgument(name = "id") final String problemId) {
+    return service.problemzDetail(UUID.fromString(problemId))
+        .map(graphqlBeanMapper::mapToGraphql)
+        .orElse(Problem.newBuilder().build());
+  }
 
-    @DgsMutation(field = "problemCreate")
-    public ProblemResponse createProblem(@RequestHeader(name = "authToken", required = true) final String authToken,
-                                         @InputArgument(name = "problem") final ProblemCreateInput problemCreateInput) {
-        return null;
-    }
+  @DgsMutation(field = "problemCreate")
+  public ProblemResponse createProblem(
+      @RequestHeader(name = "authToken", required = true) final String authToken,
+      @InputArgument(name = "problem") final ProblemCreateInput problemCreateInput) {
+    return null;
+  }
 
-    @DgsSubscription(field = "problemAdded")
-    public Flux<Problem> subscribeProblemAdded() {
-        return null;
-    }
-
+  @DgsSubscription(field = "problemAdded")
+  public Flux<Problem> subscribeProblemAdded() {
+    return null;
+  }
 }

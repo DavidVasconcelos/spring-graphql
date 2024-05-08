@@ -14,23 +14,23 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @DgsComponent
 public class UserDataResolver {
 
-    @DgsQuery(field = "me")
-    public User accountInfo(@RequestHeader(name = "authToken") final String authToken) {
-        return null;
-    }
+  @DgsQuery(field = "me")
+  public User accountInfo(@RequestHeader(name = "authToken") final String authToken) {
+    return null;
+  }
 
-    @DgsMutation(field = "userCreate")
-    public UserResponse createUser(@InputArgument(name = "user") final UserCreateInput user) {
-        return null;
-    }
+  @DgsMutation(field = "userCreate")
+  public UserResponse createUser(@InputArgument(name = "user") final UserCreateInput user) {
+    return null;
+  }
 
-    @DgsMutation
-    public UserResponse userLogin(@InputArgument(name = "user") final UserLoginInput user) {
-        return null;
-    }
+  @DgsMutation
+  public UserResponse userLogin(@InputArgument(name = "user") final UserLoginInput user) {
+    return null;
+  }
 
-    @DgsMutation
-    public UserResponse userActivation(@InputArgument(name = "user") final UserActivationInput user) {
-        return null;
-    }
+  @DgsMutation
+  public UserResponse userActivation(@InputArgument(name = "user") final UserActivationInput user) {
+    return null;
+  }
 }

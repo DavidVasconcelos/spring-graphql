@@ -14,25 +14,25 @@ import reactor.core.publisher.Flux;
 @DgsComponent
 public class SolutionDataResolver {
 
-    @DgsMutation(field = "solutionCreate")
-    public SolutionResponse createSolution(
-            @RequestHeader(name = "authToken", required = true) final String authToken,
-            @InputArgument(name = "solution") final SolutionCreateInput solutionCreateInput
-    ) {
-        return null;
-    }
+  @DgsMutation(field = "solutionCreate")
+  public SolutionResponse createSolution(
+      @RequestHeader(name = "authToken", required = true) final String authToken,
+      @InputArgument(name = "solution") final SolutionCreateInput solutionCreateInput
+  ) {
+    return null;
+  }
 
-    @DgsMutation(field = "solutionVote")
-    public SolutionResponse createSolutionVote(
-            @RequestHeader(name = "authToken", required = true) final String authToken,
-            @InputArgument(name = "vote") final SolutionVoteInput solutionVoteInput
-    ) {
-        return null;
-    }
+  @DgsMutation(field = "solutionVote")
+  public SolutionResponse createSolutionVote(
+      @RequestHeader(name = "authToken", required = true) final String authToken,
+      @InputArgument(name = "vote") final SolutionVoteInput solutionVoteInput
+  ) {
+    return null;
+  }
 
-    @DgsSubscription(field = "solutionVoteChanged")
-    public Flux<Solution> subscribeSolutionVote(@InputArgument(name = "solutionId") final String solutionId) {
-        return null;
-    }
-
+  @DgsSubscription(field = "solutionVoteChanged")
+  public Flux<Solution> subscribeSolutionVote(
+      @InputArgument(name = "solutionId") final String solutionId) {
+    return null;
+  }
 }
