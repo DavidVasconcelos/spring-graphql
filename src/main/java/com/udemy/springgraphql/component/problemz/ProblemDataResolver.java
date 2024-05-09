@@ -5,6 +5,7 @@ import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.DgsSubscription;
 import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import com.udemy.springgraphql.generated.types.Problem;
 import com.udemy.springgraphql.generated.types.ProblemCreateInput;
 import com.udemy.springgraphql.generated.types.ProblemResponse;
@@ -40,7 +41,7 @@ public class ProblemDataResolver {
   public Problem getProblemDetail(@InputArgument(name = "id") final String problemId) {
     return service.problemzDetail(UUID.fromString(problemId))
         .map(graphqlBeanMapper::mapToGraphql)
-        .orElse(Problem.newBuilder().build());
+        .orElseThrow(DgsEntityNotFoundException::new);
   }
 
   @DgsMutation(field = "problemCreate")

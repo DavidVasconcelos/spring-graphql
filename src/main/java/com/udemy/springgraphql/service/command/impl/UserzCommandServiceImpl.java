@@ -4,6 +4,7 @@ import com.udemy.springgraphql.datasource.problemz.entity.Userz;
 import com.udemy.springgraphql.datasource.problemz.entity.UserzToken;
 import com.udemy.springgraphql.datasource.problemz.repository.UserzRepository;
 import com.udemy.springgraphql.datasource.problemz.repository.UserzTokenRepository;
+import com.udemy.springgraphql.exception.ProblemzAuthenticationException;
 import com.udemy.springgraphql.service.command.UserzCommandService;
 import com.udemy.springgraphql.util.HashUtil;
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class UserzCommandServiceImpl implements UserzCommandService {
     final Optional<Userz> optionalUserz = userzRepository.findByUsernameIgnoreCase(username);
     if (optionalUserz.isEmpty() || !hashUtil.isBcryptMatch(password,
         optionalUserz.get().getHashedPassword())) {
-      throw new IllegalArgumentException("Invalid credential");
+      throw new ProblemzAuthenticationException();
     }
     final String randomAuthToken = RandomStringUtils.randomAlphanumeric(40);
     return refreshToken(optionalUserz.get().getId(), randomAuthToken);
