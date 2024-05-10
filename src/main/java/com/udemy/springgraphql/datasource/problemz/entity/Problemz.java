@@ -7,7 +7,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +28,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "problemz")
 public class Problemz implements Serializable {
@@ -43,7 +46,7 @@ public class Problemz implements Serializable {
     @OneToMany(mappedBy = "problemz")
     @OrderBy("creationTimestamp desc")
     @ToString.Exclude
-    private List<Solutionz> solutions;
+    private List<Solutionz> solutions = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private Userz createdBy;
