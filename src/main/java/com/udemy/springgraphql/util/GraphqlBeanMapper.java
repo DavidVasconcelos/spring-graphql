@@ -8,21 +8,20 @@ import com.udemy.springgraphql.generated.types.Problem;
 import com.udemy.springgraphql.generated.types.ProblemCreateInput;
 import com.udemy.springgraphql.generated.types.Solution;
 import com.udemy.springgraphql.generated.types.SolutionCategory;
+import com.udemy.springgraphql.generated.types.SolutionCreateInput;
 import com.udemy.springgraphql.generated.types.User;
 import com.udemy.springgraphql.generated.types.UserAuthToken;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.context.annotation.Configuration;
-
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.Comparator;
-import java.util.List;
 
 @Configuration
 public class GraphqlBeanMapper {
@@ -96,6 +95,17 @@ public class GraphqlBeanMapper {
         .tags(String.join(",", original.getTags()))
         .createdBy(author)
         .solutions(new ArrayList<>())
+        .build();
+  }
+
+  public Solutionz mapToEntity(final SolutionCreateInput original, final Userz author,
+      final Problemz problemz) {
+    return Solutionz.builder()
+        .id(UUID.randomUUID())
+        .content(original.getContent())
+        .category(original.getCategory().name())
+        .createdBy(author)
+        .problemz(problemz)
         .build();
   }
 }
