@@ -1,16 +1,15 @@
 package com.udemy.springgraphql.datasource.problemz.repository;
 
 import com.udemy.springgraphql.datasource.problemz.entity.Problemz;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.UUID;
-
 @Repository
-public interface ProblemzRepository extends CrudRepository<Problemz, UUID> {
+public interface ProblemzRepository extends JpaRepository<Problemz, UUID> {
 
     List<Problemz> findAllByOrderByCreationTimestampDesc();
 
