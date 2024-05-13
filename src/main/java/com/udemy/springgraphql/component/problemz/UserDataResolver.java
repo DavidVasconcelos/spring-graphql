@@ -5,9 +5,11 @@ import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
+import com.udemy.springgraphql.datasource.problemz.entity.Userz;
 import com.udemy.springgraphql.datasource.problemz.entity.UserzToken;
 import com.udemy.springgraphql.generated.types.User;
 import com.udemy.springgraphql.generated.types.UserActivationInput;
+import com.udemy.springgraphql.generated.types.UserActivationResponse;
 import com.udemy.springgraphql.generated.types.UserAuthToken;
 import com.udemy.springgraphql.generated.types.UserCreateInput;
 import com.udemy.springgraphql.generated.types.UserLoginInput;
@@ -41,7 +43,11 @@ public class UserDataResolver {
   @DgsMutation(field = "userCreate")
   public UserResponse createUser(
       @InputArgument(name = "user") final UserCreateInput userCreateInput) {
-    return null;
+    final Userz userz = graphqlBeanMapper.mapToEntity(userCreateInput);
+    final Userz savedUserz = userzCommandService.createUserz(userz);
+    return UserResponse.newBuilder()
+        .user(graphqlBeanMapper.mapToGraphql(savedUserz))
+        .build();
   }
 
   @DgsMutation
@@ -57,7 +63,13 @@ public class UserDataResolver {
   }
 
   @DgsMutation
-  public UserResponse userActivation(@InputArgument(name = "user") final UserActivationInput user) {
-    return null;
+  public UserActivationResponse userActivation(
+      @InputArgument(name = "user") final UserActivationInput userActivationInput) {
+    final Userz userz = userzCommandService.activateUser(
+            userActivationInput.getUsername(), userActivationInput.getActive())
+        .orElseThrow(DgsEntityNotFoundException::new);
+    return UserActivationResponse.newBuilder()
+        .isActive(userz.isActive())
+        .build();
   }
 }

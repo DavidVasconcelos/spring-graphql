@@ -12,4 +12,9 @@ public class HashUtil {
         originalPassword.getBytes(StandardCharsets.UTF_8));
   }
 
+  public String hashBcryptPassword(final String originalPassword) {
+    final String BCRYPT_SALT = "dontDoThisOnProd";
+    return OpenBSDBCrypt.generate(originalPassword.getBytes(StandardCharsets.UTF_8),
+        BCRYPT_SALT.getBytes(StandardCharsets.UTF_8), 5);
+  }
 }

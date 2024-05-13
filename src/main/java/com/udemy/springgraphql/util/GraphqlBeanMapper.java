@@ -11,6 +11,7 @@ import com.udemy.springgraphql.generated.types.SolutionCategory;
 import com.udemy.springgraphql.generated.types.SolutionCreateInput;
 import com.udemy.springgraphql.generated.types.User;
 import com.udemy.springgraphql.generated.types.UserAuthToken;
+import com.udemy.springgraphql.generated.types.UserCreateInput;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -29,6 +30,12 @@ public class GraphqlBeanMapper {
   private final PrettyTime PRETTY_TIME = new PrettyTime();
   private final ZoneOffset ZONE_OFFSET = ZoneId.of("America/Sao_Paulo").getRules()
       .getOffset(Instant.now());
+
+  private final HashUtil hashUtil;
+
+  public GraphqlBeanMapper(final HashUtil hashUtil) {
+    this.hashUtil = hashUtil;
+  }
 
   public User mapToGraphql(final Userz original) {
     return User.newBuilder()
@@ -106,6 +113,18 @@ public class GraphqlBeanMapper {
         .category(original.getCategory().name())
         .createdBy(author)
         .problemz(problemz)
+        .build();
+  }
+
+  public Userz mapToEntity(final UserCreateInput original) {
+    return Userz.builder()
+        .id(UUID.randomUUID())
+        .hashedPassword(hashUtil.hashBcryptPassword(original.getPassword()))
+        .username(original.getUsername())
+        .email(original.getEmail())
+        .displayName(original.getDisplayName())
+        .avatar(original.getAvatar())
+        .active(true)
         .build();
   }
 }

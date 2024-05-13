@@ -41,6 +41,19 @@ public class UserzCommandServiceImpl implements UserzCommandService {
     return refreshToken(optionalUserz.get().getId(), randomAuthToken);
   }
 
+  @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class})
+  public Userz createUserz(final Userz userz) {
+    return userzRepository.save(userz);
+  }
+
+  @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = {Exception.class})
+  public Optional<Userz> activateUser(final String username, final boolean isActive) {
+    userzRepository.activateUser(username, isActive);
+    return userzRepository.findByUsernameIgnoreCase(username);
+  }
+
   private UserzToken refreshToken(final UUID userId, final String authToken) {
     final LocalDateTime now = LocalDateTime.now();
     final UserzToken userzToken = UserzToken.builder()
