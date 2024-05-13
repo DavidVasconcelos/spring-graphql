@@ -1,10 +1,8 @@
 package com.udemy.springgraphql.exception.handler;
 
 import com.netflix.graphql.dgs.exceptions.DefaultDataFetcherExceptionHandler;
-import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import com.netflix.graphql.types.errors.ErrorType;
 import com.netflix.graphql.types.errors.TypedGraphQLError;
-import com.udemy.springgraphql.exception.ProblemzAuthenticationException;
 import graphql.execution.DataFetcherExceptionHandler;
 import graphql.execution.DataFetcherExceptionHandlerParameters;
 import graphql.execution.DataFetcherExceptionHandlerResult;
@@ -26,6 +24,9 @@ public class ProblemzGraphqlExceptionHandler implements DataFetcherExceptionHand
             + "username & password combination match (both are case sensitive)."));
     errorProviderMap.put("DgsEntityNotFoundException", new ProblemzErrorDetail(ErrorType.NOT_FOUND,
         "Entity request failed. Check the given parameters"));
+    errorProviderMap.put("ProblemzPermissionException",
+        new ProblemzErrorDetail(ErrorType.PERMISSION_DENIED,
+            "You are not allowed to access this operation"));
   }
 
   @Override
@@ -33,10 +34,8 @@ public class ProblemzGraphqlExceptionHandler implements DataFetcherExceptionHand
       final DataFetcherExceptionHandlerParameters handlerParameters) {
     final Throwable exception = handlerParameters.getException();
     final ProblemzErrorDetail problemzErrorDetail = errorProviderMap.getOrDefault(
-        exception.getClass().getSimpleName(), new ProblemzErrorDetail());
-    if (exception instanceof ProblemzAuthenticationException) {
-      return handleException(handlerParameters, exception, problemzErrorDetail);
-    } else if (exception instanceof DgsEntityNotFoundException) {
+        exception.getClass().getSimpleName(), null);
+    if (problemzErrorDetail != null) {
       return handleException(handlerParameters, exception, problemzErrorDetail);
     } else {
       return new DefaultDataFetcherExceptionHandler().handleException(handlerParameters);
