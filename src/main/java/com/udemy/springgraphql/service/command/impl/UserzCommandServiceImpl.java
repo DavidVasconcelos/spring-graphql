@@ -38,7 +38,8 @@ public class UserzCommandServiceImpl implements UserzCommandService {
       throw new ProblemzAuthenticationException();
     }
     final String randomAuthToken = RandomStringUtils.randomAlphanumeric(40);
-    return refreshToken(optionalUserz.get().getId(), randomAuthToken);
+    return refreshToken(optionalUserz.get().getId(), randomAuthToken,
+        optionalUserz.get().getUserRole());
   }
 
   @Override
@@ -54,13 +55,14 @@ public class UserzCommandServiceImpl implements UserzCommandService {
     return userzRepository.findByUsernameIgnoreCase(username);
   }
 
-  private UserzToken refreshToken(final UUID userId, final String authToken) {
+  private UserzToken refreshToken(final UUID userId, final String authToken, final String role) {
     final LocalDateTime now = LocalDateTime.now();
     final UserzToken userzToken = UserzToken.builder()
         .userId(userId)
         .authToken(authToken)
         .creationTimestamp(now)
         .expiryTimestamp(now.plusHours(2))
+        .authority(role)
         .build();
     return userzTokenRepository.save(userzToken);
   }

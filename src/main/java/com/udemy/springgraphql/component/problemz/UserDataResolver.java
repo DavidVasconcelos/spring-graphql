@@ -7,8 +7,6 @@ import com.netflix.graphql.dgs.InputArgument;
 import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import com.udemy.springgraphql.datasource.problemz.entity.Userz;
 import com.udemy.springgraphql.datasource.problemz.entity.UserzToken;
-import com.udemy.springgraphql.exception.ProblemzAuthenticationException;
-import com.udemy.springgraphql.exception.ProblemzPermissionException;
 import com.udemy.springgraphql.generated.types.User;
 import com.udemy.springgraphql.generated.types.UserActivationInput;
 import com.udemy.springgraphql.generated.types.UserActivationResponse;
@@ -19,7 +17,7 @@ import com.udemy.springgraphql.generated.types.UserResponse;
 import com.udemy.springgraphql.service.command.UserzCommandService;
 import com.udemy.springgraphql.service.query.UserzQueryService;
 import com.udemy.springgraphql.util.GraphqlBeanMapper;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @DgsComponent
@@ -37,6 +35,7 @@ public class UserDataResolver {
   }
 
   @DgsQuery(field = "me")
+  @PreAuthorize("hasRole('ROLE_MEMBER') or hasRole('ROLE_ADMIN')")
   public User accountInfo(@RequestHeader(name = "authToken") final String authToken) {
     return userzQueryService.findUserzByAuthToken(authToken)
         .map(graphqlBeanMapper::mapToGraphql)
@@ -44,10 +43,9 @@ public class UserDataResolver {
   }
 
   @DgsMutation(field = "userCreate")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public UserResponse createUser(
-      @RequestHeader(name = "authToken") final String authToken,
       @InputArgument(name = "user") final UserCreateInput userCreateInput) {
-    checkPermission(authToken);
     final Userz userz = graphqlBeanMapper.mapToEntity(userCreateInput);
     final Userz savedUserz = userzCommandService.createUserz(userz);
     return UserResponse.newBuilder()
@@ -68,23 +66,14 @@ public class UserDataResolver {
   }
 
   @DgsMutation
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public UserActivationResponse userActivation(
-      @RequestHeader(name = "authToken") final String authToken,
       @InputArgument(name = "user") final UserActivationInput userActivationInput) {
-    checkPermission(authToken);
     final Userz userz = userzCommandService.activateUser(
             userActivationInput.getUsername(), userActivationInput.getActive())
         .orElseThrow(DgsEntityNotFoundException::new);
     return UserActivationResponse.newBuilder()
         .isActive(userz.isActive())
         .build();
-  }
-
-  private void checkPermission(final String authToken) {
-    final Userz userAuth = userzQueryService.findUserzByAuthToken(authToken)
-        .orElseThrow(ProblemzAuthenticationException::new);
-    if (!StringUtils.equals(userAuth.getUserRole(), "ROLE_ADMIN")) {
-      throw new ProblemzPermissionException();
-    }
   }
 }

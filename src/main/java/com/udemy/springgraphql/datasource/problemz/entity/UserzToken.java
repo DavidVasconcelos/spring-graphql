@@ -36,16 +36,24 @@ public class UserzToken implements Serializable {
     @CreationTimestamp
     private LocalDateTime creationTimestamp;
     private LocalDateTime expiryTimestamp;
+    private String authority;
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final UserzToken that)) return false;
-        return Objects.equals(userId, that.userId) && Objects.equals(authToken, that.authToken) && Objects.equals(creationTimestamp, that.creationTimestamp) && Objects.equals(expiryTimestamp, that.expiryTimestamp);
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final UserzToken that)) {
+            return false;
+        }
+      return Objects.equals(userId, that.userId) && Objects.equals(authToken,
+            that.authToken) && Objects.equals(creationTimestamp, that.creationTimestamp)
+            && Objects.equals(expiryTimestamp, that.expiryTimestamp)
+            && Objects.equals(authority, that.authority);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, authToken, creationTimestamp, expiryTimestamp);
+        return Objects.hash(userId, authToken, creationTimestamp, expiryTimestamp, authority);
     }
 }

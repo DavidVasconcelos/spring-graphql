@@ -54,6 +54,7 @@ input UserCreateInput {
     password: String!
     displayName: String
     avatar: Url
+    isAdmin: Boolean!
 }
 
 input UserLoginInput {
@@ -86,6 +87,7 @@ input SolutionVoteInput {
 type UserAuthToken {
     authToken: String
     expiryTime: DateTime
+    authority: String
 }
 
 type UserResponse {

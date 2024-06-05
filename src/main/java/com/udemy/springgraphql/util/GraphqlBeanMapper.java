@@ -91,6 +91,7 @@ public class GraphqlBeanMapper {
     return UserAuthToken.newBuilder()
         .authToken(original.getAuthToken())
         .expiryTime(original.getExpiryTimestamp().atOffset(ZONE_OFFSET))
+        .authority(original.getAuthority())
         .build();
   }
 
@@ -125,6 +126,7 @@ public class GraphqlBeanMapper {
         .displayName(original.getDisplayName())
         .avatar(original.getAvatar())
         .active(true)
+        .userRole(original.getIsAdmin() ? "ROLE_ADMIN" : "ROLE_MEMBER")
         .build();
   }
 }
